@@ -6,7 +6,13 @@
  * rules = OBA Filter rules to apply (array of strings)
  */
 const src = (id, url, fit, rules) => ({ id, url, fit, rules })
-
+const ESTONIA_CONFIG = {
+  'id': 'estonia',
+  'src': [
+    src('estonia', 'http://peatus.ee/gtfs/gtfs.zip', false)
+  ],
+  'osm': 'estonia'
+}
 const HSL_CONFIG = {
   'id': 'hsl',
   'src': [
@@ -60,9 +66,9 @@ const WALTTI_CONFIG = {
 let ALL_CONFIGS
 
 const setCurrentConfig = (name) => {
-  ALL_CONFIGS = [WALTTI_CONFIG, HSL_CONFIG, FINLAND_CONFIG].reduce((acc, nxt) => {
+  ALL_CONFIGS = [ESTONIA_CONFIG].reduce((acc, nxt) => {
     if ((name && name.split(',').indexOf(nxt.id) !== -1) ||
-      name === undefined) {
+        name === undefined) {
       acc.push(nxt)
     }
     return acc
@@ -116,17 +122,16 @@ Object.keys(extraSrc).forEach((id) => {
 
 // create id->src-entry map
 const configMap = ALL_CONFIGS.map(cfg => cfg.src)
-  .reduce((acc, val) => acc.concat(val), [])
-  .reduce((acc, val) => {
-    if (acc[val.id] === undefined) {
-      acc[val.id] = val
-    }
-    return acc
-  }, {})
+    .reduce((acc, val) => acc.concat(val), [])
+    .reduce((acc, val) => {
+      if (acc[val.id] === undefined) {
+        acc[val.id] = val
+      }
+      return acc
+    }, {})
 
 const osm = [
-  { id: 'finland', url: 'http://dev.hsl.fi/osm.finland/finland.osm.pbf' },
-  { id: 'hsl', url: 'http://dev.hsl.fi/osm.hsl/hsl.osm.pbf' }
+  { id: 'estonia', url: 'http://download.geofabrik.de/europe/estonia-latest.osm.pbf' }
 ]
 
 const dem = [

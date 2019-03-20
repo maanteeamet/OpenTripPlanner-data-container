@@ -19,12 +19,12 @@ const { postSlackMessage } = require('./util')
  * Download and test new osm data
  */
 gulp.task('osm:update', function () {
-  const map = config.ALL_CONFIGS().map(cfg => cfg.osm).concat('finland').reduce((acc, val) => { acc[val] = true; return acc }, {})
+  const map = config.ALL_CONFIGS().map(cfg => cfg.osm).concat('estonia').reduce((acc, val) => { acc[val] = true; return acc }, {})
   const urls = Object.keys(map).map(key => config.osmMap[key])
   return dl(urls, true, true)
-    .pipe(gulp.dest(`${config.dataDir}/downloads/osm`))
-    .pipe(testGTFSFile())
-    .pipe(gulp.dest(`${config.dataDir}/ready/osm`))
+      .pipe(gulp.dest(`${config.dataDir}/downloads/osm`))
+      // .pipe(testGTFSFile())
+      .pipe(gulp.dest(`${config.dataDir}/ready/osm`))
 })
 
 /**
@@ -43,13 +43,13 @@ gulp.task('dem:update', function () {
   }
   const promises = dlBlob(urls, true, true)
   return Promise.all(promises)
-    .catch((err) => {
-      if (err === 'fail') {
-        process.stdout.write('Failing build because of a failed DEM download!\n')
-        postSlackMessage(`Failing build because of a failed DEM download.`)
-        process.exit(1)
-      }
-    })
+      .catch((err) => {
+        if (err === 'fail') {
+          process.stdout.write('Failing build because of a failed DEM download!\n')
+          postSlackMessage(`Failing build because of a failed DEM download.`)
+          process.exit(1)
+        }
+      })
 })
 
 gulp.task('del:filter', () => del([`${config.dataDir}/filter`]))
@@ -67,28 +67,28 @@ gulp.task('del:id', () => del([`${config.dataDir}/id`]))
 gulp.task('gtfs:dl', gulp.series('del:id', function () {
   const urlEntry = {}
   config.ALL_CONFIGS().map(cfg => cfg.src).reduce((acc, val) => acc.concat(val), []).forEach(
-    (entry) => {
-      if (urlEntry[entry.url] === undefined) {
-        urlEntry[entry.url] = entry
+      (entry) => {
+        if (urlEntry[entry.url] === undefined) {
+          urlEntry[entry.url] = entry
+        }
       }
-    }
   )
 
   const files = Object.keys(urlEntry).map(key => urlEntry[key])
 
   return dl(files, true, true)
-    .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
-  //    .pipe(vinylPaths(del))
-    .pipe(testGTFSFile())
-    .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))
+      .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
+      //    .pipe(vinylPaths(del))
+      //   .pipe(testGTFSFile())
+      .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))
 }))
 
 // Add feedId to gtfs files in id dir, and moves files to directory 'fit'
 gulp.task('gtfs:id', function () {
   return gulp.src([`${config.dataDir}/id/gtfs/*`])
-    .pipe(setFeedIdTask())
-  //    .pipe(vinylPaths(del))
-    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+      .pipe(setFeedIdTask())
+      //    .pipe(vinylPaths(del))
+      .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
 })
 
 gulp.task('hslHack', function () {
@@ -99,23 +99,23 @@ gulp.task('hslHack', function () {
 // 'filter'
 gulp.task('gtfs:fit', gulp.series('del:filter', 'hslHack', function () {
   return gulp.src([`${config.dataDir}/fit/gtfs/*`])
-    .pipe(fitGTFSTask(config.configMap))
-    // .pipe(vinylPaths(del))
-    .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))
+      .pipe(fitGTFSTask(config.configMap))
+      // .pipe(vinylPaths(del))
+      .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))
 }))
 
 gulp.task('copyRouterConfig', function () {
   return gulp.src(['router-*/**']).pipe(
-    gulp.dest(config.dataDir))
+      gulp.dest(config.dataDir))
 })
 
 // Run one of more filter runs on gtfs files(based on config) and moves files to
 // directory 'ready'
 gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
   return gulp.src([`${config.dataDir}/filter/gtfs/*`])
-    .pipe(OBAFilterTask(config.configMap))
-    // .pipe(vinylPaths(del))
-    .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
+      .pipe(OBAFilterTask(config.configMap))
+      // .pipe(vinylPaths(del))
+      .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 }))
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`]))
@@ -151,8 +151,6 @@ gulp.task('router:copy', gulp.series('router:del', function () {
 
 gulp.task('router:buildGraph', gulp.series('router:copy', function () {
   gulp.src(['otp-data-container/*', 'otp-data-container/.*'])
-    .pipe(gulp.dest(`${config.dataDir}/build/waltti`))
-    .pipe(gulp.dest(`${config.dataDir}/build/finland`))
-    .pipe(gulp.dest(`${config.dataDir}/build/hsl`))
+      .pipe(gulp.dest(`${config.dataDir}/build/estonia`))
   return buildOTPGraphTask(config.ALL_CONFIGS())
 }))

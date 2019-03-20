@@ -23,7 +23,7 @@ let routers
 if (process.env.ROUTERS) {
   routers = process.env.ROUTERS.replace(/ /g, '').split(',')
 } else {
-  routers = ['finland', 'waltti', 'hsl']
+  routers = ['estonia']
 }
 
 start('seed').then(() => {
@@ -34,7 +34,7 @@ start('seed').then(() => {
   } else {
     const cronPattern = process.env.CRON || '0 0 3 * * *'
     process.stdout.write(`Starting timer with pattern: ${cronPattern}\n`)
-    new CronJob(cronPattern, update, null, true, 'Europe/Helsinki') // eslint-disable-line
+    new CronJob(cronPattern, update, null, true, 'Europe/Tallinn') // eslint-disable-line
   }
 }).catch((err) => {
   process.stdout.write(err + '\n')
@@ -45,9 +45,9 @@ async function update () {
   postSlackMessage('Starting data build')
   setCurrentConfig(routers.join(',')) // restore used config
 
-  await every(updateDEM, function (task, callback) {
-    start(task).then(() => { callback(null, true) })
-  })
+  // await every(updateDEM, function (task, callback) {
+  //   start(task).then(() => { callback(null, true) })
+  // })
 
   await every(updateOSM, function (task, callback) {
     start(task).then(() => { callback(null, true) })
@@ -68,18 +68,18 @@ async function update () {
       try {
         process.stdout.write('Executing deploy script.\n')
         execFileSync('./deploy.sh', [router],
-          {
-            env:
-              {
-                DOCKER_USER: process.env.DOCKER_USER,
-                DOCKER_AUTH: process.env.DOCKER_AUTH,
-                DOCKER_TAG: process.env.DOCKER_TAG,
-                TEST_TAG: process.env.OTP_TAG || '',
-                TOOLS_TAG: process.env.TOOLS_TAG || '',
-                DOCKER_API_VERSION: process.env.DOCKER_API_VERSION
-              },
-            stdio: [0, 1, 2]
-          }
+            {
+              env:
+                  {
+                    DOCKER_USER: process.env.DOCKER_USER,
+                    DOCKER_AUTH: process.env.DOCKER_AUTH,
+                    DOCKER_TAG: process.env.DOCKER_TAG,
+                    TEST_TAG: process.env.OTP_TAG || '',
+                    TOOLS_TAG: process.env.TOOLS_TAG || '',
+                    DOCKER_API_VERSION: process.env.DOCKER_API_VERSION
+                  },
+              stdio: [0, 1, 2]
+            }
         )
         postSlackMessage(`${router} data updated.`)
       } catch (E) {
