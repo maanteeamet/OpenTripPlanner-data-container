@@ -21,7 +21,7 @@ const buildGraph = function (config) {
     const version = execSync(`docker pull hsldevcom/opentripplanner:${graphBuildTag};docker run --rm --entrypoint /bin/bash hsldevcom/opentripplanner:${graphBuildTag}  -c "java -jar otp-shaded.jar --version"`)
     const commit = version.toString().match(/commit: ([0-9a-f]+)/)[1]
 
-    const buildGraph = exec(`docker run -v ${hostDataDir}/build:/opt/opentripplanner/graphs --rm --entrypoint /bin/bash hsldevcom/opentripplanner:${graphBuildTag}  -c "java -Xmx8g -jar otp-shaded.jar --build graphs/${config.id}/router"`, { maxBuffer: constants.BUFFER_SIZE })
+    const buildGraph = exec(`docker run -v ${hostDataDir}/build:/opt/opentripplanner/graphs --rm --entrypoint /bin/bash hsldevcom/opentripplanner:${graphBuildTag}  -c "java -Xmx2g -jar otp-shaded.jar --build graphs/${config.id}/router"`, { maxBuffer: constants.BUFFER_SIZE })
     // const buildGraph = exec('ls -la');
     const buildLog = fs.openSync(`${dataDir}/build/${config.id}/build.log`, 'w+')
 
@@ -62,32 +62,32 @@ module.exports = {
           // create zip file for the source data
           // include all gtfs + osm + router- + build configs
           zipWithGlob(`${dataDir}/build/${config.id}/router-${config.id}.zip`,
-            [`${dataDir}/build/${config.id}/router/*.zip`, `${dataDir}/build/${config.id}/router/*.json`,
-              `${dataDir}/build/${config.id}/router/${config.osm}.pbf`,
-              `${dataDir}/build/${config.id}/router/${config.dem}.tif`],
-            `router-${config.id}`,
-            (err) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve()
-              }
-            })
+              [`${dataDir}/build/${config.id}/router/*.zip`, `${dataDir}/build/${config.id}/router/*.json`,
+                `${dataDir}/build/${config.id}/router/${config.osm}.pbf`,
+                `${dataDir}/build/${config.id}/router/${config.dem}.tif`],
+              `router-${config.id}`,
+              (err) => {
+                if (err) {
+                  reject(err)
+                } else {
+                  resolve()
+                }
+              })
         })
         const p2 = new Promise((resolve, reject) => {
           process.stdout.write('Creating zip file for otp graph\n')
           // create zip file for the graph:
           // include  graph.obj + router-config.json
           zipWithGlob(`${dataDir}/build/${config.id}/graph-${config.id}-${commit}.zip`,
-            [`${dataDir}/build/${config.id}/router/Graph.obj`, `${dataDir}/build/${config.id}/router/router-*.json`],
-            config.id,
-            (err) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve()
-              }
-            })
+              [`${dataDir}/build/${config.id}/router/Graph.obj`, `${dataDir}/build/${config.id}/router/router-*.json`],
+              config.id,
+              (err) => {
+                if (err) {
+                  reject(err)
+                } else {
+                  resolve()
+                }
+              })
         })
 
         const p3 = new Promise((resolve, reject) => {

@@ -69,7 +69,7 @@ module.exports = {
         callback(null, null)
         return
       }
-      const osmFile = `${dataDir}/ready/osm/finland.pbf`
+      const osmFile = `${dataDir}/ready/osm/estonia.pbf`
 
       if (!fs.existsSync(osmFile)) {
         process.stdout.write(`${osmFile} not available, skipping ${gtfsFile}\n`)
