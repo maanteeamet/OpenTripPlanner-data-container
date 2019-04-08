@@ -45,7 +45,7 @@ while true; do
             SLEEP=$(($SLEEP + 24*3600))
         fi
         SLEEP=$(($SLEEP + $BUILD_INTERVAL_SECONDS))
-
+    
         echo "** Sleeping $SLEEP seconds until the next build"
         sleep $SLEEP
     fi

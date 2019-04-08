@@ -2,12 +2,12 @@
 set +e
 
 # set defaults
-ORG=${ORG:-hsldevcom}
+ORG=peatusee.azurecr.io
 JAVA_OPTS=${JAVA_OPTS:--Xmx7g}
 ROUTER_NAME=${1:-hsl}
 TEST_TAG=${2:-latest}
 TOOLS_TAG=${3:-latest}
-DOCKER_IMAGE=$ORG/opentripplanner-data-container-$ROUTER_NAME:test
+DOCKER_IMAGE=$ORG/opentripplanner-data-container-$ROUTER_NAME:latest
 
 function shutdown() {
   echo shutting down
