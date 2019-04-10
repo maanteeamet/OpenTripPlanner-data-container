@@ -19,7 +19,7 @@ AUTO_REBUILD_HOUR=${AUTO_REBUILD_HOUR:-6}
 BUILDER_TYPE=${BUILDER_TYPE:-dev}
 
 
- docker login -u $DOCKER_USER -p $DOCKER_AUTH $ORG
+docker login -u $DOCKER_USER -p $DOCKER_AUTH $ORG
 
 # param: message text content
 function post_slack_message {

@@ -15,14 +15,13 @@ CONTAINER=opentripplanner-data-container
 DOCKER_IMAGE=$ORG/$CONTAINER-$ROUTER_NAME
 DOCKER_TEST_IMAGE=$DOCKER_IMAGE:latest
 
-docker login -u $DOCKER_USER -p $DOCKER_AUTH $ORG
 
 echo "*** Testing $ROUTER_NAME..."
 
-#./test.sh $ROUTER_NAME latest $TOOLS_TAG
+./test.sh $ROUTER_NAME latest $TOOLS_TAG
 
 echo "*** $ROUTER_NAME tests passed"
-docker login -u $DOCKER_USER -p $DOCKER_AUTH peatusee.azurecr.io
+docker login -u $DOCKER_USER -p $DOCKER_AUTH $ORG
 
 if [ -v DOCKER_TAG ] && [ "$DOCKER_TAG" != "undefined" ]; then
     DOCKER_DATE_IMAGE=$DOCKER_IMAGE:$DATE-$DOCKER_TAG
