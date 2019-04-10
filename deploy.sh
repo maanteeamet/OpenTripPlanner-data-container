@@ -10,11 +10,12 @@ set -e
 ROUTER_NAME=${1:-estonia}
 DATE=`date +"%Y-%m-%d"`
 
-ORG=peatusee.azurecr.io
+
 CONTAINER=opentripplanner-data-container
 DOCKER_IMAGE=$ORG/$CONTAINER-$ROUTER_NAME
 DOCKER_TEST_IMAGE=$DOCKER_IMAGE:latest
 
+docker login -u $DOCKER_USER -p $DOCKER_AUTH $ORG
 
 echo "*** Testing $ROUTER_NAME..."
 
