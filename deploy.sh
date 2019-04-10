@@ -7,21 +7,21 @@
 #DOCKER_AUTH
 set -e
 
-ROUTER_NAME=${1:-hsl}
+ROUTER_NAME=${1:-estonia}
 DATE=`date +"%Y-%m-%d"`
 
-ORG=${ORG:-hsldevcom}
+
 CONTAINER=opentripplanner-data-container
 DOCKER_IMAGE=$ORG/$CONTAINER-$ROUTER_NAME
-DOCKER_TEST_IMAGE=$DOCKER_IMAGE:test
+DOCKER_TEST_IMAGE=$DOCKER_IMAGE:latest
 
 
 echo "*** Testing $ROUTER_NAME..."
 
-./test.sh $ROUTER_NAME $TEST_TAG $TOOLS_TAG
+./test.sh $ROUTER_NAME latest $TOOLS_TAG
 
 echo "*** $ROUTER_NAME tests passed"
-docker login -u $DOCKER_USER -p $DOCKER_AUTH
+docker login -u $DOCKER_USER -p $DOCKER_AUTH $ORG
 
 if [ -v DOCKER_TAG ] && [ "$DOCKER_TAG" != "undefined" ]; then
     DOCKER_DATE_IMAGE=$DOCKER_IMAGE:$DATE-$DOCKER_TAG

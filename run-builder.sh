@@ -18,6 +18,9 @@ BUILD_TIME=${BUILD_TIME:-23:00:00}
 AUTO_REBUILD_HOUR=${AUTO_REBUILD_HOUR:-6}
 BUILDER_TYPE=${BUILDER_TYPE:-dev}
 
+
+docker login -u $DOCKER_USER -p $DOCKER_AUTH $ORG
+
 # param: message text content
 function post_slack_message {
     MSG='{"username":"OTP data builder '$BUILDER_TYPE'","text":"'$1'"}'
@@ -45,7 +48,7 @@ while true; do
             SLEEP=$(($SLEEP + 24*3600))
         fi
         SLEEP=$(($SLEEP + $BUILD_INTERVAL_SECONDS))
-
+    
         echo "** Sleeping $SLEEP seconds until the next build"
         sleep $SLEEP
     fi
