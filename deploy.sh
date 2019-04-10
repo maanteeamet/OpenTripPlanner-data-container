@@ -18,7 +18,7 @@ DOCKER_TEST_IMAGE=$DOCKER_IMAGE:latest
 
 echo "*** Testing $ROUTER_NAME..."
 
-./test.sh $ROUTER_NAME latest $TOOLS_TAG
+#./test.sh $ROUTER_NAME latest $TOOLS_TAG
 
 echo "*** $ROUTER_NAME tests passed"
 docker login -u $DOCKER_USER -p $DOCKER_AUTH peatusee.azurecr.io
