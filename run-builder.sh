@@ -92,6 +92,7 @@ while true; do
 
     if [[ "$BUILD_INTERVAL" -le 0 ]]; then
         #run only once
+        sleep 120
         exit 0
     fi
 done
