@@ -78,7 +78,7 @@ module.exports = {
           process.stdout.write('Creating zip file for otp graph\n')
           // create zip file for the graph:
           // include  graph.obj + router-config.json
-          zipWithGlob(`${dataDir}/build/${config.id}/graph-${config.id}-${commit}.zip`,
+          zipWithGlob(`${dataDir}/build/${config.id}/graph-${config.id}.zip`,
               [`${dataDir}/build/${config.id}/router/Graph.obj`, `${dataDir}/build/${config.id}/router/router-*.json`],
               config.id,
               (err) => {
