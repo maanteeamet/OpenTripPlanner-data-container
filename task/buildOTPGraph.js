@@ -4,7 +4,7 @@ const fs = require('fs')
 const { dataDir, hostDataDir, constants } = require('../config.js')
 const { postSlackMessage } = require('../util')
 const graphBuildTag = process.env.OTP_TAG || 'latest'
-const otpRegistry = process.env.OTP_REGISTRY || 'peatusee.azurecr.io/opentripplanner'
+const otpRegistry = process.env.OTP_REGISTRY || 'registry.peatus.ee/opentripplanner'
 /*
  * node.js wrapper for building OTP graph
  */
