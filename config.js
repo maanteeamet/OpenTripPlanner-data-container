@@ -102,7 +102,7 @@ module.exports = {
   osmMap: osm.reduce((acc, val) => { acc[val.id] = val; return acc }, {}),
   dem,
   demMap: dem.reduce((acc, val) => { acc[val.id] = val; return acc }, {}),
-  dataToolImage: `peatusee.azurecr.io/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
+  dataToolImage: `registry.mnt.ee/peatusee/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
   dataDir: process.env.DATA || `${process.cwd()}/data`,
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,
   setCurrentConfig: setCurrentConfig,
