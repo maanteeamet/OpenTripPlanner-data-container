@@ -93,7 +93,7 @@ module.exports = {
                 done()
               })
             } else {
-              if (fs.lstatSync(dstDir).isDirectory()) {
+              if (fs.existsSync(path) && fs.lstatSync(dstDir).isDirectory()) {
                 process.stdout.write(`deleting ${dstDir}\n`)
                 fs.removeSync(dstDir)
               }
