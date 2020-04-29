@@ -1,2 +1,3 @@
 #remove rail type
 {"op":"remove", "match":{"file":"routes.txt", "agency_id":"82"}}
+{"op":"remove", "match":{"file":"agency.txt", "agency_id":"82"}}
