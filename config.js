@@ -9,7 +9,7 @@ const src = (id, url, fit, rules) => ({ id, url, fit, rules })
 const ESTONIA_CONFIG = {
   'id': 'estonia',
   'src': [
-    src('estonia', 'http://peatus.ee/gtfs/gtfs.zip', false)
+    src('estonia', 'http://peatus.ee/gtfs/gtfs.zip', false, ['router-estonia/gtfs-rules/gtfs.rule'])
   ],
   'osm': 'estonia'
 }
