@@ -21,11 +21,12 @@ wget https://bootstrap.pypa.io/get-pip.py && \
   pip install cffi && \
   pip install utm
 
-git clone https://github.com/maanteeamet/onebusaway-gtfs-modules.git
-cd onebusaway-gtfs-modules
-git checkout estonia
-./mvnw package
-cp onebusaway-gtfs-transformer-cli/target/onebusaway-gtfs-transformer-cli.jar ./onebusaway-gtfs-transformer-cli.jar
+git clone https://github.com/maanteeamet/onebusaway-gtfs-modules.git && \
+  cd onebusaway-gtfs-modules && \
+  git checkout estonia && \
+  ./mvnw package && \
+  cp onebusaway-gtfs-transformer-cli/target/onebusaway-gtfs-transformer-cli.jar ../onebusaway-gtfs-transformer-cli.jar && \
+  cd ..
 
 git clone https://github.com/jswhit/pyproj.git
 cd pyproj
