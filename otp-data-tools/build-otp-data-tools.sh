@@ -24,6 +24,7 @@ wget https://bootstrap.pypa.io/get-pip.py && \
 git clone https://github.com/maanteeamet/onebusaway-gtfs-modules.git && \
   cd onebusaway-gtfs-modules && \
   git checkout estonia && \
+  chmod +x mvnw && \
   ./mvnw package && \
   cp onebusaway-gtfs-transformer-cli/target/onebusaway-gtfs-transformer-cli.jar ../onebusaway-gtfs-transformer-cli.jar && \
   cd ..
