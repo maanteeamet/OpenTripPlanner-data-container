@@ -13,7 +13,7 @@ module.exports = function (configs, regexp) {
 
   let toProcess = configs.length
   configs.forEach(c => {
-    const container = `peatusee.azurecr.io/opentripplanner-data-container-${c.id}:${seedTag}`
+    const container = `registry.mnt.ee/peatusee/opentripplanner-data-container-${c.id}:${seedTag}`
     process.stdout.write(`extracting data from ${container}...\n`)
     const script =
   `docker rmi --force ${container} || true;
