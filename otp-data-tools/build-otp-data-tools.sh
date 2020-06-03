@@ -26,7 +26,8 @@ git clone https://github.com/maanteeamet/onebusaway-gtfs-modules.git && \
   git checkout estonia && \
   chmod +rxw mvnw && \
   ./mvnw package && \
-  cp onebusaway-gtfs-transformer-cli/target/onebusaway-gtfs-transformer-cli.jar ../onebusaway-gtfs-transformer-cli.jar && \
+  mkdir ../one-busaway-gtfs-transformer && \
+  cp onebusaway-gtfs-transformer-cli/target/onebusaway-gtfs-transformer-cli.jar ../one-busaway-gtfs-transformer/onebusaway-gtfs-transformer-cli.jar && \
   cd ..
 
 git clone https://github.com/jswhit/pyproj.git
