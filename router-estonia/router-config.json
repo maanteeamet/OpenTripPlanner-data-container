@@ -15,12 +15,10 @@
 
   "updaters": [
     {
-      "id": "hsl-trip-updates",
-      "type": "MQTT-gtfs-rt-updater",
-      "url": "tcp://mqtt.cinfra.fi",
-      "topic": "gtfsrt/v1/fi/hsl/tu",
-      "feedId": "HSL",
-      "fuzzyTripMatching": true
+      "type": "bike-rental",
+      "frequencySec": 60,
+      "sourceType": "tartu-bycicle-park",
+      "url": "https://api.ratas.tartu.ee/cxf/am/station/map/search/"
     }
   ],
   "boardTimes": {
